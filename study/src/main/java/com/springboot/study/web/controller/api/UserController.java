@@ -1,20 +1,19 @@
 package com.springboot.study.web.controller.api;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.study.web.controller.api.data.User;
+import com.springboot.study.web.dto.AccountReqDto;
 import com.springboot.study.web.dto.CMRespDto;
 import com.springboot.study.web.dto.SigninReqDto;
 import com.springboot.study.web.dto.SignupReqDto;
@@ -47,66 +46,48 @@ public class UserController {
 	
 	@PostMapping("/auth/signup") // post요청을 하는 어노테이션에 맵핑주소
 	public ResponseEntity<?> signup(@Valid SignupReqDto signupReqDto, BindingResult bindingResult){ // @Valid 어노테이션으로 validationCheck를 할 수 있다. / BindingResult로 Dto에 어노테이션 달려있는 것들을 담을 수 있다.
-		if(bindingResult.hasErrors()) { // 
-			Map<String, String> errorMap = new HashMap<String, String>();
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			return new ResponseEntity<>(new CMRespDto<Map<String, String>>(-1, "필드 오류", errorMap), HttpStatus.BAD_REQUEST);
-		}
 		
-		return new ResponseEntity<>(new CMRespDto<SignupReqDto>(1, "회원가입 완료.", signupReqDto), HttpStatus.OK);
+		
+		return new ResponseEntity<>(new CMRespDto<SignupReqDto>(1, "회원가입 완료.", signupReqDto), HttpStatus.OK); // 오류가 없을 때 대한 결과 값과 status메세지를 리턴한다.
 	}
 	
-//	@PostMapping("/auth/signup")
-//	public ResponseEntity<?> signup(@Valid SignupReqDto signupReqDto, BindingResult bindingResult) { //@Valid 벨리데이션 체크의 결과를 블랜딩리절트가 받는다.
-//		if(bindingResult.hasErrors()) { // 블랜딩 안에 error가 있으면 true를 반환
-//			Map<String, String> errorMap = new HashMap<String, String>(); // Map<Stirng, String>의 Map객체 생성
-//			for(FieldError error : bindingResult.getFieldErrors()) { // 변수들 중에서 필드에러가 있으면 for문을 돈다
-//				errorMap.put(error.getField(), error.getDefaultMessage()); //getField가 에러난 필드의 변수명을 가지고 온다. DefaultMessage가 메세지를 보내준다.(메세지 조정 가능) 
-//			}
-//			return new ResponseEntity<>(new CMRespDto<Map<String, String>>(-1, "필드 오류", errorMap), HttpStatus.BAD_REQUEST); //보내주는 데이터를 CMRespDto 방식으로 보내준다.
-//		}
-//		
-//		
-//		return new ResponseEntity<>(new CMRespDto<SignupReqDto>(1, "회원가입 완료.", signupReqDto), HttpStatus.OK); //
-//	}
-	@PostMapping("/auth/signin")
-	public ResponseEntity<?> signin(@Valid SigninReqDto signinReqDto, BindingResult bindingResult){
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<String, String>();
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			return new ResponseEntity<>(new CMRespDto<Map<String, String>>(-1, "필드 오류", errorMap), HttpStatus.BAD_REQUEST);
-		}
+	
+	@PostMapping("/auth/signin") // post요청을 하는 어노테이션에 맵핑주소
+	public ResponseEntity<?> signin(@Valid SigninReqDto signinReqDto, BindingResult bindingResult){// @Valid 어노테이션으로 validationCheck를 할 수 있다. / BindingResult로 Dto에 어노테이션 달려있는 것들을 담을 수 있다.
 		
-		User user = new User();
-		if(signinReqDto.getUsername().equals(user.getUsername()) && signinReqDto.getPassword().equals(user.getPassword())){
-			return new ResponseEntity<>(new CMRespDto<User>(1, "로그인 성공", user), HttpStatus.OK);
+		User user = new User(); // User객체 생성
+		if(signinReqDto.getUsername().equals(user.getUsername()) && signinReqDto.getPassword().equals(user.getPassword())){ // Dto에 있는 username과 password가 user안에 있는 username과 password가 같다면 
+			return new ResponseEntity<>(new CMRespDto<User>(1, "로그인 성공", user), HttpStatus.OK); // CMRespDto 객체를 생성하면서 로그인 성공값들을 반환해주어라
 		}else {
-			return new ResponseEntity<>(new CMRespDto<User>(-1, "로그인 실패", user), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new CMRespDto<User>(-1, "로그인 실패", user), HttpStatus.BAD_REQUEST); // CMRespDto 객체를 생성하면서 로그인 실패값들을 반환해주어라
 		}
 	}
 	
-//	@PostMapping("/auth/signin")
-//	public ResponseEntity<?> signin(@Valid SigninReqDto signinReqDto, BindingResult bindingResult){
-//		if(bindingResult.hasErrors()) {
-//			Map<String, String> errorMap = new HashMap<String, String>();
-//			for(FieldError error : bindingResult.getFieldErrors()) {
-//				errorMap.put(error.getField(), error.getDefaultMessage());
-//			}
-//			return new ResponseEntity<>(new CMRespDto<Map<String, String>>(-1, "필드 오류", errorMap), HttpStatus.BAD_REQUEST);
-//		}
-//		User user = new User();
-//		if(signinReqDto.getUsername().equals(user.getUsername())
-//				&& signinReqDto.getPassword().equals(user.getPassword())) {
-//			return new ResponseEntity<>(new CMRespDto<User>(1, "로그인 성공", user), HttpStatus.OK);
-//		}else {
-//			return new ResponseEntity<>(new CMRespDto<User>(-1, "로그인 실패", user), HttpStatus.BAD_REQUEST);
-//		}
-//	}
+	@PutMapping("/account/{username}") // put요청을 하는 어노테이션에 맵핑주소
+	public ResponseEntity<?> updateUser(@PathVariable String username, // @PathVariable 어노테이션으로 위의 파라미터값과 동일한 이름의 파라미터 값에 매핑됨
+			@Valid AccountReqDto accountReqDto, BindingResult bindingResult){ // @Valid 어노테이션으로 벨리데이션 체크를 할 수 있고 BindingResult로 변수들을 가지고 온다.
+		
+		User user = new User(); // user객체 생성
+		if(!user.getUsername().equals(username)) { // user객체 안에 username과 입력값으로 받은 username이 같지 않다면
+			return new ResponseEntity<>(new CMRespDto<String>(-1, "회원 조회 실패.", username), HttpStatus.BAD_REQUEST); // CMRespDto 객체를 생성하면서 회원조회 실패 값을 반환해주어라
+		}
+		
+		user.setEmail(accountReqDto.getEmail()); //일치 한다면 user 이메일에 Dto로 받은 이메일로 바꾸어라
+		user.setName(accountReqDto.getName()); //일치 한다면 user 이름에 Dto로 받은 이름으로 바꾸어라
+		
+		return new ResponseEntity<>(new CMRespDto<User>(1, "회원정보 수정완료", user), HttpStatus.OK); // CMRespDto 객체를 생성하면서 회원정보 수정이 완료된 user 데이터와 함께 값들을 반환해주어라
+		
+		
+	}
 	
+	@DeleteMapping("/account/{username}") // delete요청을 하는 어노테이션의 맵핑주소
+	public ResponseEntity<?> deleteUser(@PathVariable String username){ // @PathVariable 어노테이션으로 위의 파라미터값과 동일한 이름의 파라미터 값에 매핑됨
+		User user = new User(); // user객체 생성
+		if(!user.getUsername().equals(username)) { // user의 username과 입력값으로 받은 username이 일치하지 않다면
+			return new ResponseEntity<>(new CMRespDto<String>(-1, "회원탈퇴 실패.", username), HttpStatus.BAD_REQUEST); // CMRespDto 객체를 생성하면서 회원탈퇴 실패 값을 반환해주어라
+		}
+		return new ResponseEntity<>(new CMRespDto<String>(1, "회원탈퇴 성공.", username), HttpStatus.OK); // CMRespDto 객체를 생성하면서 회원탈퇴 성공값을 반환해주어라
+	}
 	
 	
 	
