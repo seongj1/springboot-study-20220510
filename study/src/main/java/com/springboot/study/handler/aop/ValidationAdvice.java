@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-import com.springboot.study.handler.ex.CustomValidationApiExecption;
+import com.springboot.study.handler.ex.CustomValidationApiException;
 
 /*
  * Aspect: 여러 핵심 기능에 적용될 관심사 모듈을 의미한다. Aspect에는 구체적인 기능을 구현한 Advice와 Advice가 
@@ -47,7 +47,7 @@ public class ValidationAdvice {
 					}
 					LOGGER.error("Validation AOP 실행됨"); // 
 					
-					throw new CustomValidationApiExecption("유효성 검사 실패", errorMap); // CustomValidationApiExecption객체를 만들면서 매개변수로 메새지와 errorMap을 함께 날린다.
+					throw new CustomValidationApiException("유효성 검사 실패", errorMap); // CustomValidationApiExecption객체를 만들면서 매개변수로 메새지와 errorMap을 함께 날린다.
 					
 				}
 			}
