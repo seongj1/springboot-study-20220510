@@ -1,8 +1,12 @@
 package com.springboot.study.handler.aop;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.CodeSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,16 +21,31 @@ public class LogAdvice {
 	public Object logging(ProceedingJoinPoint pjp) throws Throwable{ // 
 		long startAt = System.currentTimeMillis(); // 메서드가 시작하는 시간
 		
-		LOGGER.info("--------Advice Call: {}({}) = {}", pjp.getSignature().getDeclaringTypeName(), 
-				pjp.getSignature().getName(), "데이터"); // 메서드를 요청할 때 LOGGER에 보여줄 값과 데이터를 넣는다.
+		Map<String, Object> params = getPrams(pjp);
 		
-		Object result = pjp.proceed(); // filter의 체인과 같은 역할
+		LOGGER.info("--------Advice Call: {}({}) = {}", pjp.getSignature().getDeclaringTypeName(), 
+				pjp.getSignature().getName(), params); // 메서드를 요청할 때 LOGGER에 보여줄 값과 데이터를 넣는다.
+		
+		Object result = pjp.proceed(); // filter의 체인과 같은 역할 / 해당메서드가 실행되는 기점
 		
 		long endAt = System.currentTimeMillis(); // 메서드가 끝나는 시간
 		
 		LOGGER.info("--------Advice End: {}({}) = {} ({}ms)", pjp.getSignature().getDeclaringTypeName(), 
-				pjp.getSignature().getName(), "데이터", endAt - startAt);  // 메서드가 끝날 때 LOGGER에 보여줄 값과 데이터를 넣는다.
+				pjp.getSignature().getName(), result, endAt - startAt);  // 메서드가 끝날 때 LOGGER에 보여줄 값과 데이터를 넣는다.
 		
 		return result; // 
+	}
+	
+	private Map<String, Object> getPrams(ProceedingJoinPoint pjp){
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		Object[] args = pjp.getArgs();
+		String[] argNames = ((CodeSignature)pjp.getSignature()).getParameterNames();
+		
+		for(int i = 0; i < args.length; i++) {
+			params.put(argNames[i], args[i]);
+		}
+		return params;
 	}
 }
