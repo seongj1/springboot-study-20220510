@@ -11,7 +11,6 @@
 package com.springboot.study.web.dto; 
 
 //import 정보
-import java.util.Scanner; //왜 들고 왔는지
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

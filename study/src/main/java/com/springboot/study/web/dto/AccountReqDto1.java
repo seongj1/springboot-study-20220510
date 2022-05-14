@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AccountReqDto {
-	
+public class AccountReqDto1 {
 	@NotBlank
 	@Email
 	private String email;
