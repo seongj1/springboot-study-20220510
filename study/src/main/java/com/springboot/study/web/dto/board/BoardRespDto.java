@@ -15,5 +15,6 @@ public class BoardRespDto {
 	private String content;
 	private int usercode;
 	private String username;
+	private int board_count;
 	
 }

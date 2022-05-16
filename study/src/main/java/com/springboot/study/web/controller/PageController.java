@@ -11,4 +11,9 @@ public class PageController {
 	public String index() {
 		return "index"; // index 페이지 맵핑주소
 	}
+	
+	@GetMapping("/board")
+	public String boardList() {
+		return "board/board-list";
+	}
 }
