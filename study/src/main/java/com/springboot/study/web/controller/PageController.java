@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
 	
 	
-	@GetMapping("/index") // GetMapping으로 페이지 get 요청
+	@GetMapping("/index") // get요청으로 받는 맵핑 주소
 	public String index() {
 		return "index"; // index 페이지 맵핑주소
 	}
 	
-	@GetMapping("/board")
+	@GetMapping("/board") // get요청으로 받는 맵핑 주소
 	public String boardList() {
-		return "board/board-list";
+		return "board/board-list"; // 게시글 목록 페이지 맵핑 주소
 	}
 }

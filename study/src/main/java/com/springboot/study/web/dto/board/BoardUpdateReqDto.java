@@ -11,18 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BoardUpdateReqDto {
+public class BoardUpdateReqDto { // 게시글을 수정할 때 사용할 Dto
 	
 	@NotBlank
-	private String title;
+	private String title; // 게시글 제목 변수
 	@NotBlank
-	private String content;
+	private String content; // 게시글 내용 변수
 	
-	public BoardMst toBoardMstEntity(int boardCode) {
+	public BoardMst toBoardMstEntity(int boardCode) { // Entity로 받아서 넘겨줄 메서드
 		return BoardMst.builder()
 				.board_code(boardCode)
 				.board_title(title)
 				.board_content(content)
 				.build();
 	}
+	
 }

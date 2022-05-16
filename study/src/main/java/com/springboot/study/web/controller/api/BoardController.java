@@ -29,10 +29,10 @@ public class BoardController {
 	
 	private final BoardService boardService;
 	
-	@GetMapping("/board/list")
-	public ResponseEntity<?> getBoardList(int page) throws Exception{
-		List<BoardRespDto> boardRespDtos = boardService.getBoardListByPage(page);
-		
+	@GetMapping("/board/list") // get요청으로 받는 맵핑주소
+	public ResponseEntity<?> getBoardList(int page) throws Exception{ // 게시글 목록을 가져오기 위한 메서드
+		List<BoardRespDto> boardRespDtos = boardService.getBoardListByPage(page); // Dto리스트 변수를 만들고 boardService에 메서드를 불러와서 page를 매개변수로 넣는다.
+		// CMRespDto 객체를 생성하고 게시글 목록 로드 입력값과 boardRespDtos를 받고 status에 OK를 보내준다. 
 		return new ResponseEntity<>(new CMRespDto<List<BoardRespDto>>(1, "게시글 목록 로드", boardRespDtos),HttpStatus.OK);
 	}
 
@@ -48,16 +48,16 @@ public class BoardController {
 		return new ResponseEntity<>(new CMRespDto<BoardRespDto>(1, "게시글 조회 성공", boardRespDto), HttpStatus.OK); // CMRespDto에 BoardRespDto 형태로 입력값들과 boardRespDto를 받고 status로 OK를 보내준다.
 	}
 	
-	@PutMapping("/board/{boardCode}")
-	public ResponseEntity<?> updateBoard(@PathVariable int boardCode, 
-			@Valid BoardUpdateReqDto boardUpdateReqDto, BindingResult bindingResult) throws Exception{
-		int resultBoardCode = boardService.updateBoard(boardCode, boardUpdateReqDto);
-		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 수정 성공", resultBoardCode), HttpStatus.OK);
+	@PutMapping("/board/{boardCode}") // put요청으로 받는 맵핑주소
+	public ResponseEntity<?> updateBoard(@PathVariable int boardCode, // @PathVariable 어노테이션으로 위의 파라미터 값과 동일한 이름의 파라미터에 맵핑한다. 
+			@Valid BoardUpdateReqDto boardUpdateReqDto, BindingResult bindingResult) throws Exception{ // @Valid 어노테이션으로 Dto안에 변수를 벨리데이션 체크 가능
+		int resultBoardCode = boardService.updateBoard(boardCode, boardUpdateReqDto); // int 자료형의 변수에 boardService에 메서드를 가져와 매개변수에 boardCode와 boardUpdateReqDto를 넣어준다.
+		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 수정 성공", resultBoardCode), HttpStatus.OK); // CMRespDto에 게시글 수정 성공 입력값과 resultBoardCode를 받고 status로 OK를 보내준다.
 	}
 	
-	@DeleteMapping("board/{boardCode}")
-	public ResponseEntity<?> deleteBoard(@PathVariable int boardCode) throws Exception{
-		int resultBoardCode = boardService.deleteBoard(boardCode);
-		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 삭제 성공", resultBoardCode), HttpStatus.OK);
+	@DeleteMapping("board/{boardCode}") // delete요청으로 받는 맵핑주소
+	public ResponseEntity<?> deleteBoard(@PathVariable int boardCode) throws Exception{ // @PathVariable 어노테이션으로 위의 파라미터 값과 동일한 이름의 파라미터에 맵핑한다.
+		int resultBoardCode = boardService.deleteBoard(boardCode); // int자료형 변수에 boardService에 메서드를 불러와서 매개변수로 boardCode를 넣는다.
+		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 삭제 성공", resultBoardCode), HttpStatus.OK); // CMRespDto에 게시글 삭제 성공 입력값과 resultBoardCode를 받고 status로 OK를 보내준다.
 	}
 }

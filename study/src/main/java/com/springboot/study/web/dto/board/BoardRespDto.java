@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BoardRespDto {
+public class BoardRespDto { // 게시글 목록을 반환해주기 위한 Dto 
 	private int boardCode;
 	private String title;
 	private String content;

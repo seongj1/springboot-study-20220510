@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BoardMst {
+public class BoardMst { // DB에 있는 컬럼명과 같게 변수이름을 설정해준다.
 	private int board_code;
 	private String board_title;
 	private String board_content;
