@@ -1,15 +1,12 @@
- const boardListTable = document.querySelector('.board-list-table');
- const boardListPage = document.querySelector('.board-list-page');
- const pageButton = boardListPage.querySelectorAll('div');
- 
- 
+const boardListTable = document.querySelector('.board-list-table');
+const boardListPage = document.querySelector('.board-list-page');
+const pageButton = boardListPage.querySelectorAll('div');
 
- 
- let nowPage = 1;
- 
- load(nowPage);
- 
- function load(page) {
+let nowPage = 1;
+
+load(nowPage);
+
+function load(page){
 	$.ajax({
 		type: "get",
 		url: "/board/list",
@@ -20,7 +17,7 @@
 		success: function(data){
 			let boardList = JSON.parse(data);
 			getBoardList(boardList.data);
-			getBoardItems();
+			
 		},
 		error: function(){
 			alert("비동기 처리 오류");
@@ -28,15 +25,19 @@
 	});
 }
 
-function getBoardList(data) {
-	/*while(boardListTable.hasChildNodes()){
+function getBoardList(data){
+	while(boardListTable.hasChildNodes()){
 		boardListTable.removeChild(boardListTable.firstChild);
-	}*/
+	}
 	
-	const tableBody = boardListTable.querySelector('tbody');
-	
-	 let tableStr = ``;
-	
+	let tableStr = `
+	<tr>
+		<th>번호</th>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>조회수</th>
+	</tr>
+	`
 	for(let i = 0; i < data.length; i++){
 		tableStr += `
 		<tr class="board-items">
@@ -56,16 +57,3 @@ for(let i = 0; i < pageButton.length; i++) {
 		load(nowPage);
 	}
 }
-
-function getBoardItems(){
-	const boardItems = document.querySelectorAll('.board-items');
-	for(let i = 0; i < boardItems.length; i++){
-		boardItems[i].onclick = () => {
-			location.href = "/board/dtl/" + boardItems[i].querySelectorAll('td')[0].textContent;
-		}
-	}
-}
-
-
-
-
