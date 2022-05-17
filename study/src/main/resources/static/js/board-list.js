@@ -1,66 +1,66 @@
  const boardListTable = document.querySelector('.board-list-table');
  const boardListPage = document.querySelector('.board-list-page');
  const pageButton = boardListPage.querySelectorAll('div');
- 
- 
-
- 
+ /* 게시글 페이지 번호*/
  let nowPage = 1;
- 
+ /* 게시글 페이지 로드 */
  load(nowPage);
- 
+ /* 게시글 페이지 로드 함수 */
  function load(page) {
 	$.ajax({
-		type: "get",
-		url: "/board/list",
-		data: {
+		type: "get",/* 요청 타입*/
+		url: "/board/list", /* 요청 url*/
+		data: { /* 데이터 */
 			"page" : page
 		},
-		dataType: "text",
-		success: function(data){
-			let boardList = JSON.parse(data);
-			getBoardList(boardList.data);
-			getBoardItems();
+		dataType: "text", /* 데이터 타입 */
+		success: function(data){ /* 성공했을시 */
+			let boardList = JSON.parse(data); /* boardList에 제이슨타입 데이터 저장*/
+			getBoardList(boardList.data); /* getBoarddList 함수 호출 매개변수에 boarList.data*/
+			getBoardItems(); /* getBoardItems 함수 호출*/
 		},
-		error: function(){
-			alert("비동기 처리 오류");
+		error: function(){ /* 실패했을시 */
+			alert("비동기 처리 오류"); /* alert창으로 비동기 처리 오류 알림표시*/
 		}
 	});
 }
 
-function getBoardList(data) {
-	/*while(boardListTable.hasChildNodes()){
+function getBoardList(data) { /* 게시글 목록 가지고 오는 함수 */
+	/*while(boardListTable.hasChildNodes()){ //////thead를 쓰지 않았을 때 사용하는 while문
 		boardListTable.removeChild(boardListTable.firstChild);
 	}*/
 	
-	const tableBody = boardListTable.querySelector('tbody');
+	const tableBody = boardListTable.querySelector('tbody'); /* tableBody에 tbody 저장*/
 	
-	 let tableStr = ``;
+	 let tableStr = ``; /* tebleStr을 빈값으로 생성*/
 	
-	for(let i = 0; i < data.length; i++){
+	for(let i = 0; i < data.length; i++){ /* data갯수만큼 반복문 실행*/
+		/* tableStr안에 게시글 목록에 들어갈 데이터 값 저장*/
 		tableStr += `
 		<tr class="board-items">
 			<td>${data[i].boardCode}</td>
 			<td>${data[i].title}</td>
 			<td>${data[i].username}</td>
-			<td>${data[i].boardCount}</td>
+			<td>${data[i].board_count}</td>
 		</tr>
 		`;
 	}
-	boardListTable.innerHTML = tableStr;
+	tableBody.innerHTML = tableStr; /* tableBody.innerHTML로 tableStr을 넣는다.*/
 }
 
-for(let i = 0; i < pageButton.length; i++) {
-	pageButton[i].onclick = () => {
-		nowPage = pageButton[i].textContent;
-		load(nowPage);
+for(let i = 0; i < pageButton.length; i++) { /* pageButton의 갯수만큼 반복문 실행*/
+	pageButton[i].onclick = () => { /* pageButton이 클릭 되었을 때 이벤트*/
+		nowPage = pageButton[i].textContent; /* nowPage에 페이지 버튼의 i번째 인덱스를 textContent한다.*/
+		load(nowPage);/* nowPage를 로드*/
 	}
 }
 
-function getBoardItems(){
-	const boardItems = document.querySelectorAll('.board-items');
-	for(let i = 0; i < boardItems.length; i++){
-		boardItems[i].onclick = () => {
+function getBoardItems(){ /* 게시글을 클릭했을 때 내용을 띄워주기 위한 함수*/
+	const boardItems = document.querySelectorAll('.board-items'); /* boardItems에 .board-items들을 저장*/
+	for(let i = 0; i < boardItems.length; i++){ /* boardItems의 갯수만큼 반복문을 실행한다.*/
+		boardItems[i].onclick = () => { /* boardItems의 i인덱스가 클릭 되었을 때*/
+			/* 게시글 내용을 보여줄 요청 경로로 보내준다.
+			 / href와 함께 boarditems의 i인덱스에 있는 td중에 0인덱스에 있는 boardCode를 textContent한다.*/
 			location.href = "/board/dtl/" + boardItems[i].querySelectorAll('td')[0].textContent;
 		}
 	}
