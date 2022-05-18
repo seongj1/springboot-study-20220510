@@ -15,6 +15,7 @@ public class BoardRespDto { // 게시글 목록을 반환해주기 위한 Dto
 	private String content;
 	private int usercode;
 	private String username;
-	private int board_count;
+	private int boardCount;
+	private long boardCountAll;
 	
 }

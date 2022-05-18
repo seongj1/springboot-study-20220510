@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.study.domain.board.BoardMst;
@@ -37,7 +38,7 @@ public class BoardController {
 	}
 
 	@PostMapping("/board") // Put요청으로 받는 맵핑주소
-	public ResponseEntity<?> createBoard(@Valid BoardInsertReqDto boardInseertReqDto, BindingResult bindingResult) throws Exception{ //게시글을 생성하기 위한 메서드 / @Vliad 어노테이션으로 벨리데이션 체크 
+	public ResponseEntity<?> createBoard(@Valid @RequestBody BoardInsertReqDto boardInseertReqDto, BindingResult bindingResult) throws Exception{ //게시글을 생성하기 위한 메서드 / @Vliad 어노테이션으로 벨리데이션 체크 
 		int boardCode = boardService.createBoard(boardInseertReqDto); // int자료형의 boardCode에 보더 서비스에서 메서드를 가져와 매개 변수로 boardInsertReqDto를 넣어준다.
 		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 작성 완료", boardCode), HttpStatus.OK); // CMRespDto에 Integer 자료형으로 입력값들과 boardCode를 받고 status로 OK를 보내준다.
 	}

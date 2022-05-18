@@ -31,7 +31,7 @@ public class BoardServiceImpl implements BoardService{
 				.content((String) (boardMap.get("board_content")))
 				.usercode((Integer) (boardMap.get("board_writer")))
 				.username((String) (boardMap.get("board_username")))
-				.board_count((Integer) (boardMap.get("board_count")))
+				.boardCount((Integer) (boardMap.get("board_count")))
 				.build());
 		}
 		return boardRespDtos; // 모든 boardMap을 저장한 변수를 반환해준다.
@@ -50,7 +50,8 @@ public class BoardServiceImpl implements BoardService{
 				.content((String) (boardMap.get("board_content")))
 				.usercode((Integer) (boardMap.get("board_writer")))
 				.username((String) (boardMap.get("board_username")))
-				.board_count((Integer) (boardMap.get("board_count")))
+				.boardCount((Integer) (boardMap.get("board_count")))
+				.boardCountAll((Long) (boardMap.get("board_count_all")))
 				.build());
 		}
 		return boardRespDtos; // 선택한 게시글 목록의 값들을 반환해준다.
@@ -78,7 +79,7 @@ public class BoardServiceImpl implements BoardService{
 				.content((String) (boardMap.get("board_content")))
 				.usercode((Integer) (boardMap.get("board_writer")))
 				.username((String) (boardMap.get("board_username")))
-				.board_count((Integer) (boardMap.get("board_count")))
+				.boardCount((Integer) (boardMap.get("board_count")))
 				.build();
 	}
 	

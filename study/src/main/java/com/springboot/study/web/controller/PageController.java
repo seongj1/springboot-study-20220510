@@ -10,17 +10,22 @@ public class PageController {
 	
 	@GetMapping("/index") // get요청으로 받는 맵핑 주소
 	public String index() {
-		return "index"; // index 페이지 맵핑주소
+		return "index"; // index 페이지 jsp 파일 이름 
 	}
 	
 	@GetMapping("/board") // get요청으로 받는 맵핑 주소
 	public String boardList() {
-		return "board/board-list"; // 게시글 목록 페이지 맵핑 주소
+		return "board/board-list"; // 게시글 목록 페이지 jsp 파일 이름 
 	}
 	
 	@GetMapping("/board/dtl/{boardCode}") // get요청으로 받는 맵핑 주소
 	// @PathVariable 어노테이션으로 위에 파라미터와 동일한 이름에 맵핑
 	public String boardDtl(@PathVariable int boardCode) { 
-		return "board/board-dtl"; // 게시글 내용 페이지 맵핑 주소 
+		return "board/board-dtl"; // 게시글 내용 페이지 jsp 파일 이름 
+	}
+	
+	@GetMapping("/board/create")
+	public String boardInsert() {
+		return "board/board-insert";
 	}
 }
