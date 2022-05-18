@@ -6,23 +6,23 @@
  /* 게시글 페이지 로드 */
  load(nowPage);
  /* 게시글 페이지 로드 함수 */
- function load(page) {
-	let url = "/board/list?page=" + page;
+ function load(page) { 
+	let url = "/board/list?page=" + page; // fetch를 사용하기 위한 객체 생성
 	
-	fetch(url)
-	.then(response => {
-		if(response.ok){
-			return response.json();
+	fetch(url) // fetch의 매개변수 url만 받아왔다.
+	.then(response => { //response
+		if(response.ok){ // response에 status코드가 OK라면
+			return response.json(); // response에 json객체를 넣어 반환해라
 		}else{
-			throw new Error("비동기 처리 오류");
+			throw new Error("비동기 처리 오류"); // OK코드가 아니라면 비동기 처리 오류 메세지를 던져라
 		}
 	})
 	.then(result => {
 			getBoardList(result.data); //getBoarddList 함수 호출 매개변수에 boarList.data
-			createPageNumber(result.data[0].boardCountAll);
+			createPageNumber(result.data[0].boardCountAll); // 페이지 넘버를 만드는 함수
 			getBoardItems(); // getBoardItems 함수 호출
 	})
-	.catch(error => {console.log(error);});
+	.catch(error => {console.log(error);}); // error 났을 때 콘솔창에 띄워 준다.
 	
 	/*$.ajax({
 		type: "get",// 요청 타입
@@ -45,21 +45,21 @@
 }
 
 
-function createPageNumber(data){
-	const boardListPage = document.querySelector('.board-list-page');
+function createPageNumber(data){ // 페이지 넘저를 만들어 준다.
+	const boardListPage = document.querySelector('.board-list-page'); // 페이지 리스트를 가지고 온다.
 	const totalBoardCount = data;
-	const totalPageCount = data % 5 == 0 ? data / 5 : (data / 5) + 1;
+	const totalPageCount = data % 5 == 0 ? data / 5 : (data / 5) + 1; // 전페 페이지 갯수를 나타낸다. / 갯수를 5로 나눴을 때 나머지가 0이라면 5로 나누고 아니라면 5로 나눈 다음 1을 더한다.
 	
-	const startIndex = nowPage % 5 == 0 ? nowPage - 4 : nowPage - (nowPage % 5) + 1;
-	const endIndex = startIndex + 4 <= totalPageCount ? startIndex + 4 : totalPageCount;
+	const startIndex = nowPage % 5 == 0 ? nowPage - 4 : nowPage - (nowPage % 5) + 1; // 시작 인덱스를 설정한다 1,6,11 이런식으로 나오도록 공식을 설정한다.
+	const endIndex = startIndex + 4 <= totalPageCount ? startIndex + 4 : totalPageCount; // 끝 인덱스를 설정한다. 5,10,15 이런식으로 나오도록 공식을 설정한다.
 	
-	let pageStr = ``;
+	let pageStr = ``; // pageStr 변수 생성
 	
-	for(let i = startIndex; i <= endIndex; i++){
-		pageStr += `<div>${i}</div>`;
+	for(let i = startIndex; i <= endIndex; i++){ // i에 시작 인덱스를 넣고 끝 인덱스가 i보다 작거나 같으면 반복문 실행
+		pageStr += `<div>${i}</div>`; // pageStr에 div으로 i값 만큼 넣는다.
 	}
 	
-	pageStr += `<div>6</div>`;
+	pageStr += `<div>다음</div>`; // 
 	
 	boardListPage.innerHTML = pageStr;
 	
