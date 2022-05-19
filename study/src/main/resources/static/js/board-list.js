@@ -31,7 +31,7 @@
 			"page" : page
 		},
 		dataType: "text", // 데이터 타입 
-		success: function(data){ // 성공했을시 
+		success: function(data){ // 성공했을시  
 			let boardList = JSON.parse(data); // boardList에 제이슨타입 데이터 저장
 			getBoardList(boardList.data); // getBoarddList 함수 호출 매개변수에 boarList.data
 			createPageNumber(boardList.data[0].boardCountAll);

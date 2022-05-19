@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api") // 이 클래스의 모든 맵핑 주소 앞에 api를 붙인다.
 public class BoardController {
 	
 	private final BoardService boardService;

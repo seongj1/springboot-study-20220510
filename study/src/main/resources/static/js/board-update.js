@@ -8,39 +8,41 @@ let boardCode = path.substring(path.lastIndexOf("/") + 1);
 
 load();
 
-function load(){ /*로드 함수 생성*/
+function load(){ //로드 함수 생성
 	
 	
-	let url = `/api/board/${boardCode}`
+	let url = `/api/board/${boardCode}` // 데이터를 들고오기 위한 요청 주소
 	
 	
 	fetch(url)
 	.then(response => {
-		if(response.ok){
-			return response.json();
+		if(response.ok){ //response에 status코드가 OK라면
+			return response.json(); // response에 제이슨 객체를 반환해라
 		}else{
-			throw new Error("비동기 처리 오류");
+			throw new Error("비동기 처리 오류"); // 아니라면 error 메세지를 전달해라
 		}
 	})
-	.then( data => {
-		getBoardDtl(data.data);
+	.then( data => { 
+		getBoardDtl(data.data); // 게시글 내용을 들고온다
 	})
-	.catch(error => {console.log(error);});
+	.catch(error => {console.log(error);}); // error 메세지를 보내준다. 
 	
 
 	
 }
 
-function getBoardDtl(data){
-	inputItems[0].value = `${data.title}`;
-	textareaItem.value = `${data.content}`;
-	inputItems[1].value = `${data.usercode}`;
+function getBoardDtl(data){ // 게시글 내용을 들고오기 위한 함수
+	console.log(data);
+	inputItems[0].value = data.title;  // inputItems 0번째 인덱스 벨류 값에 data안에 있는 title을 넣는다.
+	inputItems[1].value = data.username; // inputItems 1번째 인덱스 벨류 값에 data안에 있는 username를 넣는다.
+	textareaItem.value = data.content; // textareaItem의 벨류값에 data안에 있는 content를 넣는다. 
 }
+
+
 
 submitButton.onclick = () => { // submitButton을 클릭하는 이벤트
 	submit(); // submit함수 호출
 }
-
 
 
 function submit(){
@@ -54,7 +56,6 @@ function submit(){
 		body: JSON.stringify({ // stringify로 JSON 타입 데이터 생성
 			title: inputItems[0].value, // inputItems 0번째 인덱스의 벨류값 title에 저장
 			content: textareaItem.value, // textarea안에 벨류값 content에 저장
-			usercode: inputItems[1].value  // inputItems 1번째 인덱스의 벨류값 usercode에 저장
 		})
 	};
 	
@@ -68,6 +69,7 @@ function submit(){
 		}
 	})
 	.then(data => {location.href = "/board-info/" + data.data;}) // response를 반환했다면 location.href로 글 내용 페이지를 띄워줘라
+	.catch(error => {console.log(error);});
 	
 }
 
