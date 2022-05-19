@@ -43,6 +43,12 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+		<!-- security -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
 		<!-- slf4j-api -->
 		<dependency>
 		    <groupId>org.slf4j</groupId>

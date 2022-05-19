@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+*{
+	box-sizing: border-box;
+}
+
 #container{
 	display: flex;
 	flex-direction: column;
@@ -11,6 +15,7 @@
 
 .board-list{
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
@@ -32,9 +37,20 @@ td{
 	width: 400px;
 }
 
-.option-buttons {
-	display: flex;
-	justify-content: flex-end; 
-	width: 50%;
-	margin-top: 10px;
+.input-items {
+	border: none;
+	outline: none;
+	padding: 10px;
+	width: 100%;
+	height: 100%;
+}
+
+.textarea-item {
+	border: none;
+	outline: none;
+	
+	padding: 10px;
+	resize: none;
+	width: 100%;
+	height: 500px;
 }

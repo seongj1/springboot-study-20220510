@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.study.domain.board.BoardMst;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class BoardController {
 	
 	private final BoardService boardService;
@@ -51,7 +53,7 @@ public class BoardController {
 	
 	@PutMapping("/board/{boardCode}") // put요청으로 받는 맵핑주소
 	public ResponseEntity<?> updateBoard(@PathVariable int boardCode, // @PathVariable 어노테이션으로 위의 파라미터 값과 동일한 이름의 파라미터에 맵핑한다. 
-			@Valid BoardUpdateReqDto boardUpdateReqDto, BindingResult bindingResult) throws Exception{ // @Valid 어노테이션으로 Dto안에 변수를 벨리데이션 체크 가능
+			@Valid @RequestBody BoardUpdateReqDto boardUpdateReqDto, BindingResult bindingResult) throws Exception{ // @Valid 어노테이션으로 Dto안에 변수를 벨리데이션 체크 가능
 		int resultBoardCode = boardService.updateBoard(boardCode, boardUpdateReqDto); // int 자료형의 변수에 boardService에 메서드를 가져와 매개변수에 boardCode와 boardUpdateReqDto를 넣어준다.
 		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 수정 성공", resultBoardCode), HttpStatus.OK); // CMRespDto에 게시글 수정 성공 입력값과 resultBoardCode를 받고 status로 OK를 보내준다.
 	}

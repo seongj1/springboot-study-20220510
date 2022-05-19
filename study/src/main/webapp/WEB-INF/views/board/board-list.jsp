@@ -26,14 +26,18 @@
 				
 			</table>
 		</div>
-		<div class="board-list-page">
-			<div>1</div>
-			<div>2</div>
-			<div>3</div>
-			<div>4</div>
-			<div>5</div>
+		<button onclick="location.href='/board'">작성</button>
+		<div class="board-page-buttons">
+			<div class="pre-next-btn">&lt;</div>
+			<div class="board-list-page">
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+			</div>
+			<div class="pre-next-btn">&gt;</div>
 		</div>
-		
 	</div>
 	<script src="/js/board-list.js"></script>
 </body>

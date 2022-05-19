@@ -7,7 +7,7 @@
  load(nowPage);
  /* 게시글 페이지 로드 함수 */
  function load(page) { 
-	let url = "/board/list?page=" + page; // fetch를 사용하기 위한 객체 생성
+	let url = `/api/board/list?page=${page}`; // fetch를 사용하기 위한 객체 생성
 	
 	fetch(url) // fetch의 매개변수 url만 받아왔다.
 	.then(response => { //response
@@ -47,19 +47,31 @@
 
 function createPageNumber(data){ // 페이지 넘저를 만들어 준다.
 	const boardListPage = document.querySelector('.board-list-page'); // 페이지 리스트를 가지고 온다.
-	const totalBoardCount = data;
+	const preNextBtn = document.querySelectorAll('.pre-next-btn');
+	
+	
 	const totalPageCount = data % 5 == 0 ? data / 5 : (data / 5) + 1; // 전페 페이지 갯수를 나타낸다. / 갯수를 5로 나눴을 때 나머지가 0이라면 5로 나누고 아니라면 5로 나눈 다음 1을 더한다.
 	
 	const startIndex = nowPage % 5 == 0 ? nowPage - 4 : nowPage - (nowPage % 5) + 1; // 시작 인덱스를 설정한다 1,6,11 이런식으로 나오도록 공식을 설정한다.
 	const endIndex = startIndex + 4 <= totalPageCount ? startIndex + 4 : totalPageCount; // 끝 인덱스를 설정한다. 5,10,15 이런식으로 나오도록 공식을 설정한다.
+	
+	preNextBtn[0].onclick = () => {
+		nowPage = startIndex != 1 ? startIndex -1 : 1;
+		load(nowPage);
+	}
+	
+	preNextBtn[1].onclick = () => {
+		nowPage = endIndex != totalPageCount ? endIndex +1 : totalPageCount;	
+		load(nowPage);
+	}
+	
+	
 	
 	let pageStr = ``; // pageStr 변수 생성
 	
 	for(let i = startIndex; i <= endIndex; i++){ // i에 시작 인덱스를 넣고 끝 인덱스가 i보다 작거나 같으면 반복문 실행
 		pageStr += `<div>${i}</div>`; // pageStr에 div으로 i값 만큼 넣는다.
 	}
-	
-	pageStr += `<div>다음</div>`; // 
 	
 	boardListPage.innerHTML = pageStr;
 	
@@ -105,7 +117,7 @@ function getBoardItems(){ /* 게시글을 클릭했을 때 내용을 띄워주�
 		boardItems[i].onclick = () => { /* boardItems의 i인덱스가 클릭 되었을 때*/
 			/* 게시글 내용을 보여줄 요청 경로로 보내준다.
 			 / href와 함께 boarditems의 i인덱스에 있는 td중에 0인덱스에 있는 boardCode를 textContent한다.*/
-			location.href = "/board/dtl/" + boardItems[i].querySelectorAll('td')[0].textContent;
+			location.href = "/board-info/" + boardItems[i].querySelectorAll('td')[0].textContent;
 		}
 	}
 }

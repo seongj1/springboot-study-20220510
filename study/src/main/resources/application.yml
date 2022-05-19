@@ -36,7 +36,10 @@ spring:
     url: jdbc:mariadb://localhost:3306/springboot_seongjun?useUnicode=true&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: root
     password: toor
-    
+  security:
+    user:
+      name: test
+      password: 1234
     
 mybatis:
   mapper-locations:

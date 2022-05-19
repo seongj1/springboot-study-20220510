@@ -6,7 +6,7 @@ const textareaItem = document.querySelector('.textarea-item');
     Promise
 */
 
-function test(data){
+/*function test(data){
 	return new Promise((resolve, reject)=>{
 		if(data > 100){
 			resolve(data);
@@ -19,7 +19,7 @@ function test(data){
 test(500)
 .then(testData => testData + 100)
 .then(testData2 => alert(testData2))
-.catch(error => {console.log(error)});
+.catch(error => {console.log(error)});*/
 
 submitButton.onclick = () => { // submitButton을 클릭하는 이벤트
 	submit(); // submit함수 호출
@@ -49,7 +49,7 @@ submitButton.onclick = () => { // submitButton을 클릭하는 이벤트
 }*/
 
 function submit(){
-	let url = "/board"; // fetch를 사용하기 위한 url 객체 생성
+	let url = "/api/board"; // fetch를 사용하기 위한 url 객체 생성
 	
 	let option = { // fetch를 사용하기 위한 option 객체 생성
 		method: "POST", // POST 요청하는 메서드
@@ -72,7 +72,7 @@ function submit(){
 			throw new Error("정상적인 데이터를 응답받지 못했습니다."); // OK가 아니라면 Error메세지를 날려라
 		}
 	})
-	.then(data => {location.href = "/board/dtl/" + data.data;}) // response를 반환했다면 location.href로 글 내용 페이지를 띄워줘라
+	.then(data => {location.href = "/board-info/" + data.data;}) // response를 반환했다면 location.href로 글 내용 페이지를 띄워줘라
 	
 }
 
