@@ -1,20 +1,30 @@
 package com.springboot.study.web.controller;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller // 일반 @Controller 어노테이션으로 페이지를 띄워줄 수 있다.
+@RequiredArgsConstructor
 public class PageController {
 	
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping("/index") // get요청으로 받는 맵핑 주소
 	public String index() {
 		return "index"; // index 페이지 jsp 파일 이름 
 	}
 	
+	@GetMapping("/auth/signin")
+	public String signin() {
+		return "auth/signin";
+	}
+	
 	@GetMapping("/board/list") // get요청으로 받는 맵핑 주소
-	public String boardList() {
+	public String boardList() { // 어노테이션이 세션 역할 principal 변수에 담아라
 		return "board/board-list"; // 게시글 목록 페이지 jsp 파일 이름 
 	}
 	
