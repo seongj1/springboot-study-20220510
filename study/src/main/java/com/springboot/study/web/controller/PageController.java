@@ -1,6 +1,5 @@
 package com.springboot.study.web.controller;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,16 +10,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PageController {
 	
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping("/index") // get요청으로 받는 맵핑 주소
 	public String index() {
 		return "index"; // index 페이지 jsp 파일 이름 
 	}
 	
-	@GetMapping("/auth/signin")
-	public String signin() {
-		return "auth/signin";
+	@GetMapping("/auth/signin") // get요청으로 받는 맵핑 주소 
+	public String signin() { 
+		return "auth/signin"; // signin 페이지 jsp 파일 이름 
 	}
 	
 	@GetMapping("/board/list") // get요청으로 받는 맵핑 주소
@@ -29,18 +27,17 @@ public class PageController {
 	}
 	
 	@GetMapping("/board-info/{boardCode}") // get요청으로 받는 맵핑 주소
-	// @PathVariable 어노테이션으로 위에 파라미터와 동일한 이름에 맵핑
-	public String boardDtl(@PathVariable int boardCode) { 
+	public String boardDtl(@PathVariable int boardCode) { // @PathVariable 어노테이션으로 위에 파라미터와 동일한 이름에 맵핑
 		return "board/board-dtl"; // 게시글 내용 페이지 jsp 파일 이름 
 	}
 	
 	@GetMapping("/board")
-	public String boardInsert() {
-		return "board/board-insert";
+	public String boardInsert() { // get요청으로 받는 맵핑 주소
+		return "board/board-insert"; // 게시글 작성 페이지 jsp 파일 이름
 	}
 	
-	@GetMapping("/board/{boardCode}")
+	@GetMapping("/board/{boardCode}") // get요청으로 받는 맵핑 주소
 	public String boardUpdate() {
-		return "board/board-update";
+		return "board/board-update"; // 게시글 수정 페이지 jsp 파일 이름
 	}
 }

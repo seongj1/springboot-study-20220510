@@ -22,16 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers("/api/board/**", "/", "/board/list") // 이 요청이 들어오면
 			.authenticated() // 인증을 거쳐라.
-			.antMatchers("/api/v1/user/**")
-			.access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-			.antMatchers("/api/v1/manager/**")
-			.access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-			.antMatchers("/api/v1/admin/**")
-			.access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/api/v1/user/**") // 이 요청이 들어오면
+			.access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')") // 이 권한을 가진 사람만 응답해줘라
+			.antMatchers("/api/v1/manager/**") // 이 요청이 들어오면
+			.access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')") // 이 권한을 가진 사람만 응답해줘라
+			.antMatchers("/api/v1/admin/**") // 이 요청이 들어오면
+			.access("hasRole('ROLE_ADMIN')") // 이 권한을 가진 사람만 응답해줘라
 			.anyRequest() // 다른 모든 요청은
 			.permitAll() // 권한이 필요없다.
 			.and()
-			.formLogin()
+			.formLogin() // form 데이터로 로그인을 시도한다.
 			.loginPage("/auth/signin") // 로그인 페이지 get요청 (view)
 			.loginProcessingUrl("/auth/signin") // 로그인 post요청(PrincipalDetailsService -> loadUserByUesrname() 호출)
 			.defaultSuccessUrl("/");

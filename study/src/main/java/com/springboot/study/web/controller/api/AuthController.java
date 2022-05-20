@@ -41,25 +41,25 @@ public class AuthController {
 	}
 	
 	@GetMapping("/authentication")
-	public ResponseEntity<?> getAuthentication(@AuthenticationPrincipal PrincipalDetails principalDetails){
-		System.out.println(principalDetails.getUser().getUser_code());
+	public ResponseEntity<?> getAuthentication(@AuthenticationPrincipal PrincipalDetails principalDetails){ // 이 어노테이션이 세션으로 갈 수 잇게 해준다. 
+		System.out.println(principalDetails.getUser().getUser_code()); 
 		String password = principalDetails.getUser().getPassword();
 		System.out.println(bCryptPasswordEncoder.matches("1234", password));
-		return new ResponseEntity<>(new CMRespDto<PrincipalDetails>(1, "세션정보", principalDetails), HttpStatus.OK);
+		return new ResponseEntity<>(new CMRespDto<PrincipalDetails>(1, "세션정보", principalDetails), HttpStatus.OK); // 세션정보와 status코드로 OK를 반환
 	}
 	
 	@GetMapping("/user")
 	public ResponseEntity<?> testUser(){
-		return new ResponseEntity<>(new CMRespDto<String>(1, "유저권한", "role_user"), HttpStatus.OK);
+		return new ResponseEntity<>(new CMRespDto<String>(1, "유저권한", "role_user"), HttpStatus.OK); // user 권한 입력값과 status코드로 Ok를 반환
 	}
 	
 	@GetMapping("/manager")
 	public ResponseEntity<?> testManager(){
-		return new ResponseEntity<>(new CMRespDto<String>(1, "매니저권한", "role_manager"), HttpStatus.OK);
+		return new ResponseEntity<>(new CMRespDto<String>(1, "매니저권한", "role_manager"), HttpStatus.OK); // manager 권한 입력값과 status코드로 Ok를 반환
 	}
 	
 	@GetMapping("/admin")
 	public ResponseEntity<?> testAdmin(){
-		return new ResponseEntity<>(new CMRespDto<String>(1, "관리자권한", "role_admin"), HttpStatus.OK);
+		return new ResponseEntity<>(new CMRespDto<String>(1, "관리자권한", "role_admin"), HttpStatus.OK); // admin 입력값과 status코드로 Ok를 반환
 	}
 }

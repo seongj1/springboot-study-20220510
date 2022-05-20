@@ -15,24 +15,25 @@ public class PrincipalDetails implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
 
-	private User user;
+	private User user; // user 객체 생성
 	
-	public PrincipalDetails(User user) {
+	public PrincipalDetails(User user) { // 이 클래스를 생성할때 user도 같이 넣어준다.
 		this.user = user;
 	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); // GrantedAuthority형태로 리스트를 만들어 변수에 담아둔다.
 		
-		user.getRoleList().forEach(r -> {
-			System.out.println("권한: " + r);
-			authorities.add(() -> r);
+		user.getRoleList().forEach(r -> { // user객체에서 권한을 담은 메서드를 불러와서 리스트의 갯수만큼 반복한다.
+			System.out.println("권한: " + r); // 반복할 때마다 어떤 권한을 가지고 있는지 콘솔창에 띄워준다.
+			authorities.add(() -> r); // authorities변수에 받아온 권한들을 저장한다.
 		});
 		
-		authorities.forEach(r -> {System.out.println("리스트에 들어있는 권한" + r.getAuthority());});
+		// 변수 안에 리스트 갯수만큼 반복할 때마다 리스트 안에 있는 권한들을 콘솔창에 찍어준다.
+		authorities.forEach(r -> {System.out.println("리스트에 들어있는 권한" + r.getAuthority());}); 
 			
-		return authorities;
+		return authorities; // 리스트를 저장한 변수를 반환해준다.
 	}
 	
 	@Override
@@ -44,6 +45,9 @@ public class PrincipalDetails implements UserDetails{
 	public String getUsername() {
 		return user.getUsername();
 	}
+	
+	
+	// true false 값으로 판단해준다.
 	
 	@Override
 	public boolean isAccountNonExpired() { //계정이 만료되었는지 확인
