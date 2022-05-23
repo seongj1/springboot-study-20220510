@@ -2,16 +2,18 @@ package com.springboot.study.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.springboot.study.domain.user.User;
 
 import lombok.Data;
 
 @Data
-public class PrincipalDetails implements UserDetails{
+public class PrincipalDetails implements UserDetails, OAuth2User{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -22,16 +24,12 @@ public class PrincipalDetails implements UserDetails{
 	}
 	
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+	public Collection<? extends GrantedAuthority> getAuthorities() { // 권한을 담고 있는 Collection
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); // GrantedAuthority형태로 리스트를 만들어 변수에 담아둔다.
 		
 		user.getRoleList().forEach(r -> { // user객체에서 권한을 담은 메서드를 불러와서 리스트의 갯수만큼 반복한다.
-			System.out.println("권한: " + r); // 반복할 때마다 어떤 권한을 가지고 있는지 콘솔창에 띄워준다.
-			authorities.add(() -> r); // authorities변수에 받아온 권한들을 저장한다.
+			authorities.add(() -> r); // authorities변수에 받아온 문자열 권한들을 객체로 생성하면서 저장한다.
 		});
-		
-		// 변수 안에 리스트 갯수만큼 반복할 때마다 리스트 안에 있는 권한들을 콘솔창에 찍어준다.
-		authorities.forEach(r -> {System.out.println("리스트에 들어있는 권한" + r.getAuthority());}); 
 			
 		return authorities; // 리스트를 저장한 변수를 반환해준다.
 	}
@@ -67,5 +65,15 @@ public class PrincipalDetails implements UserDetails{
 	@Override
 	public boolean isEnabled() { //휴면계정
 		return true;
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return null;
 	}
 }
