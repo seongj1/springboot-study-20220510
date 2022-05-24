@@ -18,9 +18,15 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 	private static final long serialVersionUID = 1L;
 
 	private User user; // user 객체 생성
+	private Map<String, Object> attributes;
 	
 	public PrincipalDetails(User user) { // 이 클래스를 생성할때 user도 같이 넣어준다.
 		this.user = user;
+	}
+	
+	public PrincipalDetails(User user, Map<String, Object> attributes) { // 이 클래스를 생성할때 user도 같이 넣어준다.
+		this.user = user;
+		this.attributes = attributes;
 	}
 	
 	@Override
@@ -69,11 +75,11 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 
 	@Override
 	public Map<String, Object> getAttributes() {
-		return null;
+		return attributes;
 	}
 
 	@Override
 	public String getName() {
-		return null;
+		return (String)attributes.get("name");
 	}
 }

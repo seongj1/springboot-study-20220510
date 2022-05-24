@@ -21,6 +21,11 @@ public class PageController {
 		return "auth/signin"; // signin 페이지 jsp 파일 이름 
 	}
 	
+	@GetMapping("/user/account/mypage")
+	public String mypage() {
+		return "account/mypage";
+	}
+	
 	@GetMapping("/board/list") // get요청으로 받는 맵핑 주소
 	public String boardList() { // 어노테이션이 세션 역할 principal 변수에 담아라
 		return "board/board-list"; // 게시글 목록 페이지 jsp 파일 이름 
