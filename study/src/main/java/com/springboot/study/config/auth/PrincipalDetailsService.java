@@ -25,8 +25,6 @@ public class PrincipalDetailsService implements UserDetailsService{
 		System.out.println("로그인 요청?"); // 메서드가 실행이 되었는지 확인
 		
 		
-				
-		
 		return new PrincipalDetails(userEntity, new HashMap<String, Object>()); // user의 데이터를 PincipalDetails 객체를 생성하면서 반환해준다.
 	}
 }

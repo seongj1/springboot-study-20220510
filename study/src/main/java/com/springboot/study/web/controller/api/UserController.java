@@ -20,6 +20,7 @@ import com.springboot.study.service.user.AccountService;
 import com.springboot.study.web.controller.api.data.User;
 import com.springboot.study.web.dto.AccountReqDto;
 import com.springboot.study.web.dto.CMRespDto;
+import com.springboot.study.web.dto.user.UserUpdateReqDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -73,7 +74,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/account/profile")
-	public ResponseEntity<?> updateProfile(){
+	public ResponseEntity<?> updateProfile(@Valid UserUpdateReqDto userUpdateReqDto, BindingResult bindingResult){
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
