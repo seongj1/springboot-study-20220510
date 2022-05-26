@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.springboot.todolist.domain.ToDoListRepository">
+  	<insert id="addToDo" parameterType="com.springboot.todolist.domain.ToDoListMst">
+  		insert into
+  			todolist_mst
+  		values(
+  			0,
+  			null,
+  			#{content},
+  			now(),
+  			now()
+  		)
+  	</insert>
+  	
+  	<select id="getList" resultType="com.springboot.todolist.domain.ToDoListMst">
+  		select 
+  			id,
+  			usercode,
+  			content,
+  			createdate,
+  			updatedate
+  		from
+  			todolist_mst
+  	</select>
+  	
+  	<update id="modifiToDo" parameterType="com.springboot.todolist.domain.ToDoListMst">
+  		update
+  			todolist_mst
+  		set
+  			content = #{content}
+  		where
+  			id = #{id}
+  	</update>
+  	
+  	<delete id="removeToDo" parameterType="Integer">
+  		delete
+  		from
+  			todolist_mst
+  		where
+  			id = #{id}
+  	</delete>
+  </mapper>
