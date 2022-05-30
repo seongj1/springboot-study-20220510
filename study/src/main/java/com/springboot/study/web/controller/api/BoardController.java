@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.study.annotation.Timer;
+import com.springboot.study.annotation.Validation;
 import com.springboot.study.domain.board.BoardMst;
 import com.springboot.study.service.board.BoardService;
 import com.springboot.study.web.dto.CMRespDto;
@@ -38,13 +40,14 @@ public class BoardController {
 		// CMRespDto 객체를 생성하고 게시글 목록 로드 입력값과 boardRespDtos를 받고 status에 OK를 보내준다. 
 		return new ResponseEntity<>(new CMRespDto<List<BoardRespDto>>(1, "게시글 목록 로드", boardRespDtos),HttpStatus.OK);
 	}
-
+	@Validation
 	@PostMapping("/board") // Put요청으로 받는 맵핑주소
 	public ResponseEntity<?> createBoard(@Valid @RequestBody BoardInsertReqDto boardInseertReqDto, BindingResult bindingResult) throws Exception{ //게시글을 생성하기 위한 메서드 / @Vliad 어노테이션으로 벨리데이션 체크 
 		int boardCode = boardService.createBoard(boardInseertReqDto); // int자료형의 boardCode에 보더 서비스에서 메서드를 가져와 매개 변수로 boardInsertReqDto를 넣어준다.
 		return new ResponseEntity<>(new CMRespDto<Integer>(1, "게시글 작성 완료", boardCode), HttpStatus.OK); // CMRespDto에 Integer 자료형으로 입력값들과 boardCode를 받고 status로 OK를 보내준다.
 	}
 	
+	@Timer
 	@GetMapping("/board/{boardCode}") // get요청으로 받는 맵핑주소
 	public ResponseEntity<?> getBoard(@PathVariable int boardCode) throws Exception{ // @PathVariable 어노테이션으로 위의 파라미터 값과 동일한 이름의 파라미터에 맵핑한다.
 		BoardRespDto boardRespDto = boardService.getBoard(boardCode); // 보더 서비스에 getBoard메서드에 매개변수로 boardCode를 넣어주고 이것을 boardRespDto 변수에 넣는다.

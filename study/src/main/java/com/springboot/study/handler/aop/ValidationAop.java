@@ -3,9 +3,11 @@ package com.springboot.study.handler.aop;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -30,14 +32,21 @@ import com.springboot.study.handler.ex.CustomValidationApiException;
 
 @Aspect
 @Component
-public class ValidationAdvice {
+public class ValidationAop {
 	
-	private final Logger LOGGER = LoggerFactory.getLogger(ValidationAdvice.class); // LoggerFactory.getLogger에 매개변수는 이 클래스 이름으로 넣는다. / 파이널 상수이기 때문에 변수명은 대문자로만 이루어져있다.
+	private final Logger LOGGER = LoggerFactory.getLogger(ValidationAop.class); // LoggerFactory.getLogger에 매개변수는 이 클래스 이름으로 넣는다. / 파이널 상수이기 때문에 변수명은 대문자로만 이루어져있다.
 	
-	//@Around("execution(* com.springboot.study.web.controller.api.*Controller.*(..))") // @Aspect 어노테이션이 @Around 어노테이션 안에 해당되는 것들을 가지고 온다.
-	@Around("execution(* com.springboot.study.test.*Controller.*(..))") 
-	public Object apiAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{ // proceedingJoinPoint가 @Around 경로안에 있는 매개변수를 가지고 온다.
-		Object[] args = proceedingJoinPoint.getArgs(); // Object로 업캐스팅해서 가져온 매개변수들을 저장한다.
+	@Pointcut("within(com.springboot.study.web.controller..*)")
+	private void pointcut() {}
+	
+	@Pointcut("@annotation(com.springboot.study.annotation.aop.Validation)")
+	private void enableValid() {}
+	
+	
+	
+	@Before("pointcut() && enableValid()")
+	public void apiAdvice(JoinPoint joinPoint) throws Throwable{ // proceedingJoinPoint가 @Around 경로안에 있는 매개변수를 가지고 온다.
+		Object[] args = joinPoint.getArgs(); // Object로 업캐스팅해서 가져온 매개변수들을 저장한다.
 		for(Object arg : args) { // args의 갯수만큼 반복한다.
 			if(arg instanceof BindingResult) { // arg안에 값이 BindingResult라면 아래 실행문을 이행해라
 				BindingResult bindingResult = (BindingResult) arg; // arg를 다운캐스팅해서 bindingResult 변수안에 넣어라
@@ -54,6 +63,10 @@ public class ValidationAdvice {
 			}
 		}
 		
-		return proceedingJoinPoint.proceed(); // filter의 체인과 같은 역할을 한다.
+	}
+	
+	@AfterReturning(value = "pointcut() && enableValid()", returning = "returnObj")
+	public void afterRetrun(JoinPoint joinPoint, Object returnObj) {
+		LOGGER.info("유효성 검사 완료: {}", returnObj);
 	}
 }

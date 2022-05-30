@@ -5,30 +5,31 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<link rel="stylesheet" href="/static/css/todolist.css">
+	<script src="https://kit.fontawesome.com/ede2458143.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-	<div id="container">
-		<div>
+	<div id="background">
+		<div id="container">
 			<div class="title-box">
-				<h1>todolist</h1>
+				<h1>my todolist</h1>
 			</div>
 			<div class="content-box">
 				<div class="content-add">
-					<span>내용</span>
-					<input type="text" placeholder="할 일 추가하기">
-					<button class="insert-btn">추가</button>
+					<i class="fa-solid fa-circle-arrow-right"></i>
+					<input type="text" class="add-input" placeholder="할 일 추가하기">
+					<i class="fa-solid fa-circle-plus"></i>
 				</div>
 				<div class="content-list">
 					<ol>
-						
+
 					</ol>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script src="/static/js/todolist-insert.js"></script>
-	<script src="/static/js/todolist-modifi.js"></script>
+	<script src="/static/js/todolist.js"></script>
 </body>
 
 </html>

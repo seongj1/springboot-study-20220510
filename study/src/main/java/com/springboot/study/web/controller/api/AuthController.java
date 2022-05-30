@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.study.annotation.Validation;
 import com.springboot.study.config.auth.PrincipalDetails;
 import com.springboot.study.domain.user.User;
 import com.springboot.study.domain.user.UserRepository;
@@ -50,6 +51,7 @@ public class AuthController {
 		return new ResponseEntity<>(cmRespDto, status); // if문 안에서 변수에 저장된 값을 ResponseEntity로 반환
 	}
 	
+	@Validation
 	@PostMapping("/auth/signup") // post요청을 하는 어노테이션에 맵핑주소
 	public ResponseEntity<?> signup(@Valid SignupReqDto signupReqDto, BindingResult bindingResult){ // @Valid 어노테이션으로 validationCheck를 할 수 있다. / BindingResult로 Dto에 어노테이션 달려있는 것들을 담을 수 있다.
 		

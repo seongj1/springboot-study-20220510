@@ -47,8 +47,8 @@ public class ToDoListController {
 	//내용 수정
 	@PutMapping("/todo/{id}")
 	public ResponseEntity<?> modifiToDo(@PathVariable int id, @Valid @RequestBody ToDoListModifiReqDto toDoListModifiReqDto) {
-		toDoListService.modifiToDo(id, toDoListModifiReqDto);
-		return new ResponseEntity<>(HttpStatus.OK);
+		int update =  toDoListService.modifiToDo(id, toDoListModifiReqDto);
+		return new ResponseEntity<>(update, HttpStatus.OK);
 	}
 	
 	//내용 삭제
